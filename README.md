@@ -30,7 +30,7 @@ This application allows users to perform complete **CRUD operations** (Create, R
 
 * Git & GitHub
 * Swagger (API Testing)
-* Docker (Optional)
+* Docker 
 
 ---
 
