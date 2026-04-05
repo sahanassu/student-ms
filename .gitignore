@@ -1,0 +1,57 @@
+# .NET
+bin/
+obj/
+*.sln.user
+*.userosscache
+*.suo
+*.cache
+*.dll
+*.exe
+*.pdb
+*.json.config
+*.log
+
+# Entity Framework
+**/Migrations/*.cs
+**/Migrations/*.Designer.cs
+!**/Migrations/DbContextModelSnapshot.cs
+
+# SQLite databases
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+logs/
+*.log
+
+# React
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+build/
+dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
+
+# Temporary files
+*.tmp
+*.temp

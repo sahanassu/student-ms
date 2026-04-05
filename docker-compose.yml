@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: studentmanagement-db
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - studentmanagement-network
+
+  api:
+    build:
+      context: .
+      dockerfile: src/StudentManagement.API/Dockerfile
+    container_name: studentmanagement-api
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db;Database=StudentManagementDB;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=true;
+      - Jwt__Key=ThisIsASecretKeyForJWTTokenGeneration123456789
+      - Jwt__Issuer=StudentManagementAPI
+      - Jwt__Audience=StudentManagementClient
+      - Jwt__ExpiryMinutes=60
+    ports:
+      - "5000:80"
+      - "5001:443"
+    depends_on:
+      - db
+    networks:
+      - studentmanagement-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: studentmanagement-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000/api
+    depends_on:
+      - api
+    networks:
+      - studentmanagement-network
+
+volumes:
+  sqlserver_data:
+
+networks:
+  studentmanagement-network:
+    driver: bridge
